@@ -122,6 +122,8 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 
 const AboutPage = () => {
   const [cvUrl, setCvUrl] = useState("");
+  const [totalProjects, setTotalProjects] = useState(0);
+  const [totalCertificates, setTotalCertificates] = useState(0);
 
   // Fetch CV from Firestore
   useEffect(() => {
@@ -142,26 +144,44 @@ const AboutPage = () => {
     fetchCV();
   }, []);
 
-  // Experience, projects, certificates (memoized)
-  const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
-    const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
+  // Update counts from localStorage
+  useEffect(() => {
+    const updateCounts = () => {
+      const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
+      const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
+      
+      setTotalProjects(storedProjects.length);
+      setTotalCertificates(storedCertificates.length);
+    };
 
+    // Initial load
+    updateCounts();
+
+    // Listen for storage changes
+    window.addEventListener("storage", updateCounts);
+
+    // Custom event for same-page updates
+    const handleLocalStorageUpdate = () => updateCounts();
+    window.addEventListener("localStorageUpdated", handleLocalStorageUpdate);
+
+    return () => {
+      window.removeEventListener("storage", updateCounts);
+      window.removeEventListener("localStorageUpdated", handleLocalStorageUpdate);
+    };
+  }, []);
+
+  // Calculate years of experience (memoized)
+  const YearExperience = useMemo(() => {
     const startDate = new Date(2022, 8, 1);
     const today = new Date();
-    const experience =
+    return (
       today.getFullYear() -
       startDate.getFullYear() -
       (today <
         new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate())
         ? 1
-        : 0);
-
-    return {
-      totalProjects: storedProjects.length,
-      totalCertificates: storedCertificates.length,
-      YearExperience: experience,
-    };
+        : 0)
+    );
   }, []);
 
   // Initialize AOS

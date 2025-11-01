@@ -180,6 +180,9 @@ export default function FullWidthTabs() {
       // Store in localStorage
       localStorage.setItem("projects", JSON.stringify(projectData));
       localStorage.setItem("certificates", JSON.stringify(certificateData));
+
+      // Dispatch custom event to notify other components
+      window.dispatchEvent(new Event("localStorageUpdated"));
     } catch (error) {
       console.error("Error fetching data:", error);
     }
