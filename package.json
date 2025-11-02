@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+  "dev": "vite",
+  "build": "vite build && cp public/_redirects dist/",
+  "lint": "eslint .",
+  "preview": "vite preview"
+},
   "dependencies": {
     "@babel/runtime": "^7.28.4",
     "@emailjs/browser": "^4.4.1",
