@@ -1,6 +1,5 @@
 /sitemap.xml
-  Content-Type: application/xml; charset=UTF-8
-  Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: application/xml
 
 /robots.txt
-  Content-Type: text/plain; charset=UTF-8
+  Content-Type: text/plain
