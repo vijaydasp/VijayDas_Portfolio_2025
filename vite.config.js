@@ -1,9 +1,25 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import sitemap from 'vite-plugin-sitemap' // ✅ Added plugin
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    sitemap({
+      hostname: 'https://vijaydasportfolio.netlify.app', // ✅ your live domain
+      routes: [
+        '/', 
+        '/about', 
+        '/projects', 
+        '/contact'
+      ],
+      readable: true,
+      changefreq: 'monthly',
+      priority: 0.8,
+      lastmod: new Date().toISOString(),
+    }),
+  ],
   base: '/',
   resolve: {
     alias: {
@@ -31,7 +47,7 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        manualChunks: undefined, // can add chunk splitting later if bundle too large
+        manualChunks: undefined,
       },
     },
   },
