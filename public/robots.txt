@@ -2,3 +2,9 @@ User-agent: *
 Allow: /
 
 Sitemap: https://vijaydasportfolio.netlify.app/sitemap.xml
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
