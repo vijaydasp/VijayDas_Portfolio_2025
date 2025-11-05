@@ -4,7 +4,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [
-    react(), // ✅ only React plugin now
+    react(),
   ],
   base: '/',
   resolve: {
